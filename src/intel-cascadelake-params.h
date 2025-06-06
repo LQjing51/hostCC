@@ -3,10 +3,10 @@
 
 // MSR locations for IIO occupancy measurements
 // IIO write occupancy
-#define IRP_MSR_PMON_CTL_BASE 0x0A5BL
-#define IRP_MSR_PMON_CTR_BASE 0x0A59L
-#define IRP_OCC_VAL 0x0040040F
-#define IIO_WR_COUNTER_OFFSET 1
+#define IRP_MSR_PMON_CTL_BASE 0x0A4DL
+#define IRP_MSR_PMON_CTR_BASE 0x0A4BL
+#define IRP_OCC_VAL 0x0040040FL
+#define IIO_WR_COUNTER_OFFSET 0
 // IIO read occupancy
 #define IIO_MSR_PMON_CTL_BASE 0x0A48L
 #define IIO_MSR_PMON_CTR_BASE 0x0A41L

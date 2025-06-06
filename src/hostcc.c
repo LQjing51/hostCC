@@ -21,7 +21,7 @@ struct workqueue_struct *poll_iio_queue, *poll_pcie_queue;
 struct work_struct poll_iio, poll_pcie;
 extern int mode;
 
-int enable_local_response = 1;
+int enable_local_response = 0;
 int enable_network_response = 1;
 
 static ssize_t target_pcie_thresh_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count) {
@@ -183,14 +183,14 @@ static int __init hostcc_init(void) {
   queue_work_on(IIO_CORE,poll_iio_queue, &poll_iio);
 
   //Start PCIe bandwidth measurement
-  poll_pcie_queue = alloc_workqueue("poll_pcie_queue", WQ_HIGHPRI | WQ_CPU_INTENSIVE, 0);
-  if (!poll_pcie_queue) {
-      printk(KERN_ERR "Failed to create PCIe workqueue\n");
-      return -ENOMEM;
-  }
-  INIT_WORK(&poll_pcie, thread_fun_poll_pcie);
-  poll_pcie_init();
-  queue_work_on(PCIE_CORE,poll_pcie_queue, &poll_pcie);
+  // poll_pcie_queue = alloc_workqueue("poll_pcie_queue", WQ_HIGHPRI | WQ_CPU_INTENSIVE, 0);
+  // if (!poll_pcie_queue) {
+  //     printk(KERN_ERR "Failed to create PCIe workqueue\n");
+  //     return -ENOMEM;
+  // }
+  // INIT_WORK(&poll_pcie, thread_fun_poll_pcie);
+  // poll_pcie_init();
+  // queue_work_on(PCIE_CORE,poll_pcie_queue, &poll_pcie);
 
   //Start ECN marking
   nf_init();
@@ -206,7 +206,7 @@ static void __exit hostcc_exit(void) {
   terminate_hcc = true;
   nf_exit();
   poll_iio_exit();
-  poll_pcie_exit();
+  // poll_pcie_exit();
 }
 
 module_init(hostcc_init);

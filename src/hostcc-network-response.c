@@ -58,6 +58,7 @@ unsigned int nf_markecn_handler_rx(void *priv, struct sk_buff *skb, const struct
           iph->tos = iph->tos | 0x03;
           iph->check = 0;
           ip_send_check(iph);
+          printk(KERN_INFO "Marking ECN of a on a Rx packet");
       }
     }
 		spin_unlock(&etx_spinlock_rx);

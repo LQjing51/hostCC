@@ -82,10 +82,10 @@ void sample_counters_iio_rd(int c){
 }
 
 void update_iio_rd_occ(void){
-  latest_time_delta_iio_rd_ns = ((cur_rdtsc_iio_rd - prev_rdtsc_iio_rd) * 10) / 33;
+  latest_time_delta_iio_rd_ns = ((cur_rdtsc_iio_rd - prev_rdtsc_iio_rd) * 10) / 33;// freq is 3.3Ghz
 	if(latest_time_delta_iio_rd_ns > 0){
 		latest_avg_occ_rd = (cur_cum_occ_rd - prev_cum_occ_rd) / (latest_time_delta_iio_rd_ns);
-    // ((occ[i] - occ[i-1]) / (((time_us[i+1] - time_us[i])) * 1e-6 * freq)); 
+    // ((occ[i] - occ[i-1]) / (((time_us[i+1] - time_us[i])) * 1e-9 * freq)); 
     // IIO counter operates at thee frequency of 1000MHz
         if(latest_avg_occ_rd >= 0){
             smoothed_avg_occ_rd = ((7*smoothed_avg_occ_rd) + (latest_avg_occ_rd << 10)) >> 3;
@@ -129,10 +129,10 @@ void sample_counters_iio_wr(int c){
 }
 
 void update_iio_wr_occ(void){
-	latest_time_delta_iio_wr_ns = ((cur_rdtsc_iio_wr - prev_rdtsc_iio_wr) * 10) / 33;
+	latest_time_delta_iio_wr_ns = ((cur_rdtsc_iio_wr - prev_rdtsc_iio_wr) * 10) / 33;// freq is 3.3Ghz
 	if(latest_time_delta_iio_wr_ns > 0){
 		latest_avg_occ_wr = (cur_cum_occ_wr - prev_cum_occ_wr) / (latest_time_delta_iio_wr_ns >> 1);
-    // ((occ[i] - occ[i-1]) / (((time_us[i+1] - time_us[i])) * 1e-6 * freq)); 
+    // ((occ[i] - occ[i-1]) / (((time_us[i+1] - time_us[i])) * 1e-9 * freq)); 
     // IRP counter operates at the frequency of 500MHz
         if(latest_avg_occ_wr > 10){
             smoothed_avg_occ_wr = ((7*smoothed_avg_occ_wr) + (latest_avg_occ_wr << 10)) >> 3;

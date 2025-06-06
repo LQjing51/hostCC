@@ -38,8 +38,9 @@ void init_nf_log(void){
 
 void dump_nf_log(void) {
   int i=0;
+  printk("NF:i,l_tsc,td_ns,m_avg_occ,cpu,dat_len\n");
   while(i<LOG_SIZE){
-    printk("NF:%d,%lld,%lld,%lld,%d,%d\n",
+    printk("%d,%lld,%lld,%lld,%d,%d\n",
     i,
     LOG_NF[i].l_tsc,
     LOG_NF[i].td_ns,
@@ -108,8 +109,9 @@ void init_iio_wr_log(void){
 
 void dump_iio_wr_log(void){
   int i=0;
+  printk("IIO:i,l_tsc,td_ns,avg_occ,s_avg_occ,cpu\n");
   while(i<LOG_SIZE){
-      printk("IIO:%d,%lld,%lld,%lld,%lld,%d\n",
+      printk("%d,%lld,%lld,%lld,%lld,%d\n",
       i,
       LOG_IIO_WR[i].l_tsc,
       LOG_IIO_WR[i].td_ns,
@@ -131,9 +133,9 @@ void update_log_pcie(int c){
 	LOG_PCIE[log_index_pcie % LOG_SIZE].avg_pcie_bw = latest_avg_pcie_bw;
   LOG_PCIE[log_index_pcie % LOG_SIZE].s_avg_pcie_bw_rd = (smoothed_avg_pcie_bw_rd >> 10);
 	LOG_PCIE[log_index_pcie % LOG_SIZE].avg_pcie_bw_rd = latest_avg_pcie_bw_rd;
-  if(app_pid_task != NULL){
-	  LOG_PCIE[log_index_pcie % LOG_SIZE].task_state = app_pid_task->state;
-  }
+  // if(app_pid_task != NULL){
+	//   LOG_PCIE[log_index_pcie % LOG_SIZE].task_state = app_pid_task->state;
+  // }
 	log_index_pcie++;
 }
 
